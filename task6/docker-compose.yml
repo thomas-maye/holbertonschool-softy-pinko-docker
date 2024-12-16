@@ -5,7 +5,7 @@ services:
     build:
       context: ./back-end
       dockerfile: Dockerfile
-    image: softy-pinko-back-end:task4
+    image: softy-pinko-back-end:task6
     ports:
       - "5252:5252"
     restart: always
@@ -14,9 +14,21 @@ services:
     build:
       context: ./front-end
       dockerfile: Dockerfile
-    image: softy-pinko-front-end:task4  
+    image: softy-pinko-front-end:task6
     ports:
       - "9000:9000"
     depends_on:
+      - back-end
+    restart: always
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: softy-pinko-proxy:task6
+    ports:
+      - "80:80"
+    depends_on:
+      - front-end
       - back-end
     restart: always
